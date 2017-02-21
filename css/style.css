@@ -1,0 +1,500 @@
+.div_principal{
+	font-family: 'Roboto', sans-serif;
+}
+
+.table_compras{
+	width: 100%;
+}
+
+.compra_icone{
+	width: 20%;
+	float: left;
+	
+}
+
+.compra_icone_row{
+	width: 8%;
+	float: left;
+}
+
+.compra_icone_row img{
+	margin: auto;
+    display: block;
+}
+
+.compra_icone img{
+	padding-left: 21px;
+	padding-top: 5px;
+}
+
+.cartao_compra{
+	/*
+	width: 500px;
+    margin: 3px auto 3px auto;
+
+*/
+
+	overflow: auto;
+	border: 1px rgba(96, 125, 139, 0.65) solid;
+	padding: 5px;
+	    margin: 0.1em;
+}
+
+.col{
+	height: 100vh;
+}
+
+.boxes_esquerda{
+	width: 27%;
+    margin-right: 4em;
+    margin-top: 2em;
+}
+
+.cartoes{
+	width: 33%;
+}
+
+.boxes_direita{
+	width: 30%;
+	margin-right: 4em;
+	margin-top: 2em;
+}
+
+.float_left{
+	float: left;
+}
+
+.float_right{
+	float:right;
+}
+
+.compra_categoria_estabelecimento{
+	width: 50%;
+	float: left;
+}
+
+.compra_categoria_estabelecimento_row{
+	width: 44%;
+    float: left;
+}
+
+.compra_valor_data{
+	width: 30%;
+	float: left;
+}
+
+.compra_valor_data_row{
+	width: 35%;
+	float: right;
+}
+}
+
+.label_categoria{
+	font-size: 25px;
+}
+
+.label_estabelecimento{
+
+}
+
+.label_data{
+	text-align: right;
+}
+
+.label_valor{
+	float: right;
+    font-size: 24px;
+    color:red;
+}
+
+.label_valor_row{
+	padding-left: 11px;
+	color:red;
+	text-decoration: bolder;
+}
+
+.overlay{
+	width: 100%;
+    height: 100%;
+    display: none;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    background: red;
+}
+
+
+.efeito_hover:hover{
+	background-color: rgba(158, 158, 158, 0.5);
+	cursor:pointer;
+}
+
+.cartao_adicionar:hover{
+	background-color: #4a8c4d;
+}
+
+.cartao_compra:hover .overlay {
+    display:block;
+}
+
+.selecionado{
+	background-color: "rgba(158, 158, 158, 0.5)";
+}
+
+.bt_suspenso{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	top: 5px;
+}
+
+
+#bt_edit {
+	background: url('../img/Edit Property-40_gray.png');
+	left: 245px;
+}
+#bt_delete {
+	background: url('../img/Delete Property-40_gray.png');
+	left: 314px;
+}
+
+#bt_edit:hover {
+	background: url('../img/Edit Property-40_blue.png');
+}
+
+#bt_delete:hover {
+	background: url('../img/Delete Property-40_red.png');
+}
+
+.fundo_cinza{
+	background-color: #e9ebee;
+}
+
+.fundo_branco{
+	background-color: white;
+}
+
+.box_adicionais{
+    border: 1px solid #ccc;
+    background-color: rgba(96, 125, 139, 0.08);
+    padding: 0.8em;	
+    margin-bottom: 1em;
+}
+
+.box_adicional_principal{
+	margin-bottom: 1.0em;
+	overflow: auto;
+	background-color: #f3f3f3;
+}
+
+.categoria_icone_row{
+	float: left;
+    padding: 0.2em;
+}
+
+.categoria_icone_row img{
+	padding-right: 0.5em;
+}
+
+.compra_icone_row img {
+    padding: 0px;
+}
+
+.label_adicionar{
+    text-align: right;
+    color: #027307;
+    padding: 0.4em;
+}
+
+.box_compra {
+
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+    padding: 1em 1em 4em 1em;
+    display: none;
+}
+
+
+.box_compra select, input{
+    padding: 4px;
+    font-size: 18px;
+    color: #009688;
+}
+
+.input_compra{
+	width: 100%
+}
+
+.input_valor{
+	width: calc(100% - 11px);
+}
+
+.botoes{
+	overflow: auto;
+    padding-top: 0.4em;
+}
+
+.botoes_alerta{
+	overflow: auto;
+    padding-top: 1.2em;
+}
+
+.box_compra_conteudo{
+	padding-top: 19px;
+}
+
+.btn{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 11px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.centralizado{
+	text-align: center;
+}
+
+.btn-pequeno{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+}
+
+.btn-verde{
+    background-color: #4CAF50;
+}
+
+.btn-verde:hover{
+	background-color: #539255;
+	cursor:pointer;
+}
+
+.btn-vermelho{
+    background-color: #ec2f2f;
+}
+
+.btn-vermelho:hover{
+	background-color:#b52f2f;
+	cursor:pointer;
+}
+
+
+.exit{
+	text-align: right;
+}
+
+.label_operacao{
+	width: 50%;
+    float: left;
+	font-size: x-large;
+	color: #009688;
+}
+
+.roxo{
+	color: #673AB7;
+}
+
+.azul{
+	color: #0d8ac5;
+}
+
+.verde{
+	color: green;
+}
+
+
+.x-large{
+	font-size: x-large;
+}
+
+.categorias{
+	overflow: auto;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+
+.label_alerta_direita{
+	padding-left: 9em;
+}
+
+.label_titulo_excluir{
+    margin-top: 0!important;
+}
+
+.x_large{
+	font-size: x-large;
+}
+
+.large{
+	font-size: large;
+}
+
+.dependencia{
+	margin: 0 auto;
+    width: 18em;
+}
+
+.atencao{
+	padding-bottom: 1em;
+}
+
+.col-tag{
+	width: 30%;
+    float: left;
+    padding: 0.1em;
+    margin: 0.1em;
+}
+
+.row_valor{
+	float: right;
+    width: auto;
+    color: red;
+}
+
+.red{
+	color: red;
+}
+
+.cartao_adicionar{
+	background-color: #4CAF50;
+    color: white;
+}
+
+.adicionar_compra{
+	float: right;
+}
+
+.titulo_categoria{
+	margin-bottom: 0.4em;
+}
+
+.mes{
+	width: 8.3%;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+}
+
+.center{
+	text-align: center;
+}
+
+.mes:hover{
+	color: gray;
+}
+
+.filtro_mes{
+	overflow: auto;
+}
+
+.mes_atual{
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-adicionar-compra{
+	margin-top: 0.2em;
+}
+
+.filtro_mes{
+	padding: 0.3em;
+}
+
+.filtro_string{
+	padding: 0.11em;
+}
+
+.box_categoria_editar, .box_categoria_adicionar, .box_estabelecimento_editar, .box_estabelecimento_adicionar{
+	display: none;
+}
+
+.minimizewindow{
+	padding-top: 0.35em;
+}
+
+/*Animations*/
+
+.mes_selecionado{
+	color: white !important;
+    background-color: #2196F3;
+}
+
+
+.ng-enter {
+
+  transition: all 0.4s linear;
+  opacity: 0;
+  background-color: #baffbd;
+
+}
+
+.ng-enter-active {
+	opacity: 1;
+}
+
+
+.ng-leave {
+  transition: all 0.5s linear;
+  opacity: 1;
+
+}
+
+.ng-leave-active {
+	opacity: 0;
+}
+
+.no-animate {
+   -webkit-transition: none !important;
+   transition: none !important;
+}
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 3% auto;
+    padding: 20px;
+    border: 1px solid rgba(136, 136, 136, 0.8);
+    width: 30%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

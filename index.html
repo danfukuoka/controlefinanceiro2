@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+
+<html ng-app="controleFinanceiro">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Controle Financeiro</title>
+	<script src="js/angular.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-resource.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+	<script src="js/controllers.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+</head>
+
+<body ng-controller="comprasCtrl" class="fundo_cinza">
+
+	<!-- The Modal -->
+	<div class="modal modalExcluir_compra">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close close_compra">&times;</span>
+	    <h2 class="label_titulo_excluir center">Deseja realmente apagar essa compra?</h2>
+
+	    <div class="large">
+	    	<div class="float_left label_alerta_esquerda bold"> Categoria: </div> <div class=" label_alerta_direita"> {{ compra_ativo.CategoriaNome}} </div>
+	    </div>
+	    <div class="large">
+	    	<div class="float_left label_alerta_esquerda bold"> Estabelecimento: </div> <div class=" label_alerta_direita"> {{ compra_ativo.EstabelecimentoNome }} </div>
+	    </div>
+	    <div class="large">
+	    	<div class="float_left label_alerta_esquerda bold"> Valor: </div> <div class=" label_alerta_direita"> {{ compra_ativo.Valor | currency:"R$"}} </div>
+	    </div>
+
+		<div class="botoes_alerta">
+			<button class="btn-pequeno btn-verde float_left" ng-click="fecharMdalExcluir_compra()">
+				Cancelar
+			</button>
+			<button class="btn-pequeno btn-vermelho float_right" ng-click="delete_compra(compra_ativo)">
+				Excluir
+			</button>
+		</div>
+
+	  </div>
+
+	</div>
+
+
+	<div class="modal modalExcluir_categoria">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close close_categoria">&times;</span>
+	    <h2 class="label_titulo_excluir centralizado">Deseja realmente apagar a categoria "{{ categoria_ativo.Nome}}" ?</h2>
+
+	    <div class="large">
+	    	<div class="atencao"> <span class="red">Atenção!  Ao apagar essa categoria, todas as compras abaixo irão ser apagadas: </span></div> 
+	    	
+	    	<div ng-repeat="compra in dependenciasCategoriaFiltradas= (compras | filter:categoria_ativo.Nome : true)" class="dependencia no-animate">
+	    		<span class="bold">{{compra.Data | date: 'dd/MM/yyyy'}}</span> {{compra.CategoriaNome}} - {{ compra.EstabelecimentoNome}} - {{compra.Valor | currency:"R$"}} 
+	    	</div>
+	    	
+	    	<span ng-hide="dependenciasCategoriaFiltradas.length" class="centralizado">Nenhuma compra vinculada a essa categoria.</span>
+	    </div>
+
+		<div class="botoes_alerta">
+			<button class="btn-pequeno btn-verde float_left" ng-click="fecharMdalExcluir_categoria()">
+				Cancelar
+			</button>
+			<button class="btn-pequeno btn-vermelho float_right" ng-click="delete_categoria(categoria_ativo)">
+				Excluir
+			</button>
+		</div>
+
+	  </div>
+
+	</div>
+
+	<div class="modal modalExcluir_estabelecimento">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close close_estabelecimento">&times;</span>
+	    <h2 class="label_titulo_excluir centralizado">Deseja realmente apagar o estabelecimento "{{ estabelecimento_ativo.Nome}}" ?</h2>
+
+	    <div class="large">
+	    	<div class="atencao"> <span class="red">Atenção!  Ao apagar esse estabelecimento, todas as compras abaixo irão ser apagadas: </span></div> 
+	    	
+	    	<div ng-repeat="compra in dependenciasEstabelecimentoFiltrados= (compras | filter:estabelecimento_ativo.Nome : true)" class="dependencia no-animate">
+	    		<span class="bold">{{compra.Data | date: 'dd/MM/yyyy'}}</span> {{compra.CategoriaNome}} - {{ compra.EstabelecimentoNome}} - {{compra.Valor | currency:"R$"}} 
+	    	</div>
+	    	
+	    	<span ng-hide="dependenciasEstabelecimentoFiltrados.length" class="centralizado">Nenhuma compra vinculada a esse estabelecimento.</span>
+	    </div>
+
+		<div class="botoes_alerta">
+			<button class="btn-pequeno btn-verde float_left" ng-click="fecharMdalExcluir_estabelecimento()">
+				Cancelar
+			</button>
+			<button class="btn-pequeno btn-vermelho float_right" ng-click="delete_estabelecimento(estabelecimento_ativo)">
+				Excluir
+			</button>
+		</div>
+
+	  </div>
+
+	</div>	
+
+
+
+	<main class="div_principal">
+
+		<div class="col float_left boxes_esquerda">
+
+			<div class="box_categorias box_adicionais box_adicional_principal">
+
+				<div class="box_compra_head">
+					<div class="titulo_categoria">
+						<span class="x-large roxo"> Categorias </span>
+						<div class="float_right">
+							<img class="minimizewindow" src="img/Minimize Window-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categorias()">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="box_categorias_conteudo">
+					<div class="categorias">
+
+						<div class="" ng-repeat="categoria in categorias" ng-switch on="$index % 3"> 
+							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_categoria(categorias[$index])">
+									<div class="categoria_icone_row">
+										<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+									</div>
+							        {{categorias[$index].Nome}}
+							  </div>
+							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_categoria(categorias[$index+1])">
+							 	<span ng-show="categorias[$index+1]">
+									<div class="categoria_icone_row">
+										<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+									</div>
+							        {{categorias[$index+1].Nome}}
+							    </span>
+							 </div>
+							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_categoria(categorias[$index+2])">
+							 	<span ng-show="categorias[$index+2]">
+									<div class="categoria_icone_row">
+										<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+									</div>
+							        {{categorias[$index+2].Nome}}
+							    </span>
+							 </div>
+						</div>
+					</div>
+					<div class="label_adicionar efeito_hover" ng-click="show_add_categoria()"> + Adicionar categoria </div>
+				</div>
+			</div>
+
+			<div class="box_adicionais box_categoria_editar">
+					<div class="">
+						<span class="bold roxo" >Editando categoria: </span> <span class="red">{{ erro_edit_categoria_nome }} </span>
+						<div class="float_right">
+							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categoria_editar()">
+						</div>
+					</div>
+					<input class="input_compra input_valor" placeholder="Nome da categoria"  type="text"/ ng-model="categoria_ativo.Nome">
+					<div class="botoes">
+						<button class="btn-pequeno btn-vermelho float_left" ng-click="abrirModalExcluir_categoria()">
+							Excluir
+						</button>
+						<button class="btn-pequeno btn-verde float_right" ng-click="edit_categoria(categoria_ativo)">
+							Gravar
+						</button>
+					</div>
+			</div>
+
+			<div class="box_categoria_adicionar box_adicionais">
+					<div class="">
+						<span class="verde bold" >Adicionar categoria: </span> <span class="red">{{ erro_add_categoria_nome }} </span>
+						<div class="float_right">
+							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categoria_adicionar()">
+						</div>
+					</div>
+					<input class="input_compra input_valor" ng-model="categoria_add" placeholder="Nome da categoria"  type="text"/>
+					<div class="botoes">
+						<button class="btn-pequeno btn-verde float_right" ng-click="add_categoria(categoria_add)">
+							Adicionar
+						</button>
+					</div>
+			</div>
+
+
+			<div class="box_estabelecimentos box_adicionais box_adicional_principal">
+				<div class="box_compra_head">
+					<div class="titulo_categoria">
+						<span class="x-large azul"> Estabelecimentos </span>
+						<div class="float_right"">
+							<img class="minimizewindow" src="img/Minimize Window-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimentos()">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="box_estabelecimentos_conteudo">
+					<div class="categorias">
+						<div class="" ng-repeat="estabelecimento in estabelecimentos" ng-switch on="$index % 3"> 
+							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_estabelecimento(estabelecimentos[$index])">
+							        {{estabelecimentos[$index].Nome}}
+							  </div>
+							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_estabelecimento(estabelecimentos[$index+1])">
+							 	<span ng-show="estabelecimentos[$index+1]">
+							        {{estabelecimentos[$index+1].Nome}}
+							    </span>
+							 </div>
+							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_estabelecimento(estabelecimentos[$index+2])">
+							 	<span ng-show="estabelecimentos[$index+2]">
+							        {{estabelecimentos[$index+2].Nome}}
+							    </span>
+							 </div>
+						</div>
+					</div>
+
+					<div class="label_adicionar efeito_hover" ng-click="show_add_estabelecimento()"> + Adicionar estabelecimento </div>
+				</div>
+			</div>
+			
+
+			<div class="box_estabelecimento_editar box_adicionais">
+					<div class="">
+						<span class="bold azul" >Editando estabelecimento: </span> <span class="red"> {{ erro_edit_estabelecimento_nome }} </span>
+						<div class="float_right">
+							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimento_editar()">
+						</div>
+					</div>
+					<input class="input_compra input_valor" placeholder="Nome da categoria"  type="text"/ ng-model="estabelecimento_ativo.Nome">
+					<div class="botoes">
+						<button class="btn-pequeno btn-vermelho float_left" ng-click="abrirModalExcluir_estabelecimento()">
+							Excluir
+						</button>
+						<button class="btn-pequeno btn-verde float_right" ng-click="edit_estabelecimento(estabelecimento_ativo)">
+							Gravar
+						</button>
+					</div>
+			</div>
+
+			<div class="box_estabelecimento_adicionar box_adicionais">
+					<div class="">
+						<span class="verde bold" >Adicionar estabelecimento: </span> <span class="red">{{ erro_add_estabelecimento_nome }} </span>
+						<div class="float_right">
+							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimento_adicionar()">
+						</div>
+					</div>
+					<input class="input_compra input_valor" ng-model="estabelecimento_add" placeholder="Nome da categoria"  type="text"/ ng-model="estabelecimento_add.Nome">
+					<div class="botoes">
+						<button class="btn-pequeno btn-verde float_right" ng-click="add_estabelecimento(estabelecimento_add)">
+							Adicionar
+						</button>
+					</div>
+			</div>
+
+		</div>
+
+		<div class="col float_left cartoes">
+
+			<div class="filtro_mes"> 
+				<div class="mes" ><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[0]}">&nbsp;Jan&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></span></div>
+				<div class="mes""><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[1]}">&nbsp;&nbsp;Fev&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[2]}">&nbsp;&nbsp;Mar&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes""><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[3]}">&nbsp;Abr&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[4]}">&nbsp;&nbsp;Mai&nbsp;&nbsp;</span><span class="separador">|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[5]}">&nbsp;&nbsp;Jun&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[6]}">&nbsp;&nbsp;Jul&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[7]}">&nbsp;&nbsp;Ago&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[8]}">&nbsp;&nbsp;Set&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[9]}">&nbsp;&nbsp;Out&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[10]}">&nbsp;&nbsp;Nov&nbsp;&nbsp;</span><span class="separador">&nbsp;|&nbsp;</span></div>
+				<div class="mes"><span class="mes_sigla" ng-click="filtrar_mes($event)" ng-class="{mes_selecionado: meses[11]}">&nbsp;&nbsp;Dez&nbsp;&nbsp;</span></div>
+			</div>
+
+			<div class="cartao_compra mes_atual" ng-click="show_add_compra($event)">
+				<span class="mes_label">
+					Compras de Fevereiro
+				<span>
+			</div>
+
+			<div class="filtro_string">
+				<input class="input_compra input_valor" placeholder="Filtrar" ng-model="criteria"/> <br />
+			</div>
+
+
+			<div class="cartao_compra cartao_compra_item fundo_branco efeito_hover" ng-repeat="compra in comprasFiltradas= (compras | filter:criteria)" ng-click="show_edit_compra($event, compra)">
+					<div class="compra_icone_row cartao_element">
+						<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+					</div>
+
+					<div class="compra_categoria_estabelecimento_row cartao_element">
+						<div class="label_estabelecimento">
+							{{compra.CategoriaNome}} - {{compra.EstabelecimentoNome}} 
+						</div>
+					</div>
+					<div class="compra_valor_row cartao_element">
+							<span class="row_data"> {{compra.Data | date: 'dd/MM/yyyy' }} </span>
+							<span class="row_valor"> {{"-"+compra.Valor | currency:"R$" }} </span>
+					</div>
+			</div>
+
+			<p ng-hide="comprasFiltradas.length" class="centralizado">Nenhuma compra encontrada com esse filtro.</p>
+
+			<button class="btn btn-verde btn-adicionar-compra float_right" ng-click="show_add_compra($event)">
+				+ Adicionar compra
+			</button>
+
+		</div>
+
+		<div class="col float_right boxes_direita">
+
+
+			<div class="box box_compra">
+				
+				<div class="box_compra_head">
+					<div class="">
+						<span class="label_operacao box_operacao"> </span>
+					</div>
+
+					<div class="exit"">
+						<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_compra()">
+					</div>
+				</div>
+
+				<!-- BOX EDITAR -->
+				<div class="box_compra_conteudo box_editar">
+
+					<span> Categoria: </span>
+					
+
+					<select class="input_compra" ng-model="compra_ativo.CategoriaID" ng-options="categoria.CategoriaID as categoria.Nome for categoria in categorias"></select>
+
+					<br /><br />
+					<span> Estabelecimento: </span>
+
+					<select class="input_compra" ng-model="compra_ativo.EstabelecimentoID" ng-options="estabelecimento.EstabelecimentoID as estabelecimento.Nome for estabelecimento in estabelecimentos"></select>
+
+		 			<br />
+		 			<br />
+
+		 			<span> Valor: </span> <span class="red"> {{ erro_edit_compra_valor }} </span>
+					<input class="input_compra input_valor" placeholder="Valor" ng-model="compra_ativo.Valor" type="number" min="0.05" max="1000000000"/> <br />
+					
+					<br />
+					<button class="btn btn-vermelho float_left" ng-click="abrirModalExcluir_compra()">
+						Excluir
+					</button>
+					<button class="btn btn-verde float_right" ng-click="edit_compra(compra_ativo)">
+						Gravar
+					</button>
+
+
+
+				</div>
+
+				<!-- BOX ADICIONAR -->
+				<div class="box_compra_conteudo box_adicionar">
+
+					<span> Categoria: </span> <span class="red"> {{ erro_add_compra_categoria }} </span>
+					<select class="input_compra" ng-model="compra_add.Categoria" ng-options="categoria.Nome for categoria in categorias">
+						<option value="" selected>--Selecione a Categoria--</option>
+					</select>
+					<br /><br />
+					<span> Estabelecimento: </span> <span class="red"> {{ erro_add_compra_estabelecimento }} </span>
+					<select class="input_compra" ng-model="compra_add.Estabelecimento" ng-options="estabelecimento.Nome for estabelecimento in estabelecimentos">
+						<option value="" selected>--Selecione o Estabelecimento--</option>
+					</select>
+		 			<br /><br />
+		 			<span> Valor: </span> <span class="red"> {{ erro_add_compra_valor }} </span>
+					<input class="input_compra input_valor" placeholder="Valor"  ng-model="compra_add.Valor" type="number" min="0.05" max="1000000000"/> <br />
+					<br />
+					<button class="btn btn-verde float_right" ng-click="add_compra(compra_add)">
+						Adicionar
+					</button>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+</body>
+
+<script src="js/script.js"></script>
+
+</html>
