@@ -7,7 +7,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 	$scope.estabelecimentos = estabelecimentosService.query({}, function() {});
 
 
-	console.log("Estabelecimentos", $scope.estabelecimentos);
+	//console.log("Estabelecimentos", $scope.estabelecimentos);
 	$scope.box = document.getElementsByClassName("box_compra")[0];
 	$scope.boxCategorias = document.getElementsByClassName("box_categorias_conteudo")[0];
 	$scope.boxCategoriaEditar = document.getElementsByClassName("box_categoria_editar")[0];
@@ -304,7 +304,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 			Nome: estabelecimento_add
 		}
 
-		console.log("estabelecimento_add", estabelecimento);
+		//console.log("estabelecimento_add", estabelecimento);
 
 		estabelecimentosService.save(acao,estabelecimento,
 	 		function(data){
@@ -320,9 +320,8 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 	}
 
 
-
 	$scope.delete_compra = function (compra_deletar){
-		console.log("compra a ser deletada: ", compra_deletar);
+		//console.log("compra a ser deletada: ", compra_deletar);
 
 	    //if(confirm("Apagar compra? \nCategoria: "+compra_deletar.CategoriaNome+"\nEstabelecimento: "+compra_deletar.EstabelecimentoNome+"\nValor: "+compra_deletar.Valor))
 	    //{
@@ -338,14 +337,14 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 					$scope.fecharMdalExcluir_compra();
 
 		 		}, function(erro){
-		 			console.log(erro);
+		 			//console.log(erro);
 		 	});
 	    //}
 
 	};
 
 	$scope.delete_categoria = function (categoria_deletar){
-		console.log("compra a ser deletada: ", categoria_deletar.Nome);
+		//console.log("compra a ser deletada: ", categoria_deletar.Nome);
 
 	    //if(confirm("Apagar Categoria? \nCategoria: "+categoria_deletar.Nome))
 	    //{
@@ -364,7 +363,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 					$scope.fecharMdalExcluir_categoria();
 
 		 		}, function(erro){
-		 			console.log(erro);
+		 			//console.log(erro);
 		 	});
 	    //}
 
@@ -390,7 +389,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 					$scope.fecharMdalExcluir_estabelecimento();
 
 		 		}, function(erro){
-		 			console.log(erro);
+		 			//console.log(erro);
 		 	});
 	    //}
 
@@ -399,7 +398,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 
 	$scope.edit_compra = function (compra_ativo){
 
-		console.log("compra_ativo", compra_ativo);
+		//console.log("compra_ativo", compra_ativo);
 
 		var flag_erro = false;
 		$scope.erro_edit_compra_valor = "";
@@ -457,11 +456,11 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 			Data: compra_ativo.Data
 		};
 
-		console.log("compraEdit", compraNova);
+		//console.log("compraEdit", compraNova);
 
 		comprasService.update(acao,compraNova,
 	 		function(data){
-	 			console.log("sucesso",data);
+	 			//console.log("sucesso",data);
 
 	 		function diferente(objeto_compra) {
   				return objeto_compra.CompraID != compraNova.CompraID;
@@ -481,7 +480,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 
 
 	 		}, function(erro){
-	 			console.log("erro",data);
+	 			//console.log("erro",data);
 	 	});
 
 	 	$scope.box.style.display = "none";
@@ -509,7 +508,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 
 		categoriasService.update(acao,categoria_ativo,
 	 		function(data){
-	 			console.log("sucesso",data);
+	 			//console.log("sucesso",data);
 
 			$scope.categorias = $scope.categorias.filter(function (categoria){
 										if(categoria.CategoriaID == data.CategoriaID){
@@ -521,7 +520,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 			$scope.filtrar_mes($scope.event_mes_clickado);
 
 	 		}, function(erro){
-	 			console.log("erro",data);
+	 			//console.log("erro",data);
 	 	});
 
 	 	$scope.boxCategoriaEditar.style.display = "none";
@@ -547,7 +546,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 
 		estabelecimentosService.update(acao,estabelecimento_ativo,
 	 		function(data){
-	 			console.log("sucesso",data);
+	 			//console.log("sucesso",data);
 
 			$scope.estabelecimentos = $scope.estabelecimentos.filter(function (estabelecimento){
 										if(estabelecimento.EstabelecimentoID == data.EstabelecimentoID){
@@ -558,7 +557,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 
 
 	 		}, function(erro){
-	 			console.log("erro",data);
+	 			//console.log("erro",data);
 	 	});
 
 	 	$scope.boxEstabelecimentoEditar.style.display = "none";
@@ -570,7 +569,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 
 		var mes_html = $event.target.innerHTML.replace(/&nbsp;/g,'');
 
-		console.log(mes_html);
+		//console.log(mes_html);
 
 		var mes = 0;
 		var meses = $scope.meses;
@@ -642,7 +641,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 				id:mes
 			};
 
-			console.log(mes);
+			//console.log(mes);
 
 			comprasService.query(acao,mes,
 				 		function(data){
@@ -657,7 +656,7 @@ app.controller("comprasCtrl", function($scope, comprasService, categoriasService
 
 		}else{
 
-			console.log("mes erro");
+			//console.log("mes erro");
 		}
 
 	}
