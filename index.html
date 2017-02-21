@@ -6,10 +6,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Controle Financeiro</title>
 	<script src="js/angular.js"></script>
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-resource.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
-	<script src="js/controllers.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	
+	<script src="app/modules/controleFinanceiro.js"></script>
+	<script src="app/services/services.js"></script>
+	<script src="app/controllers/comprasCtrl.js"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="content/css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
 </head>
@@ -120,7 +126,7 @@
 					<div class="titulo_categoria">
 						<span class="x-large roxo"> Categorias </span>
 						<div class="float_right">
-							<img class="minimizewindow" src="img/Minimize Window-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categorias()">
+							<img class="minimizewindow" src="content/images/Minimize Window-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categorias()">
 						</div>
 					</div>
 
@@ -132,14 +138,14 @@
 						<div class="" ng-repeat="categoria in categorias" ng-switch on="$index % 3"> 
 							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_categoria(categorias[$index])">
 									<div class="categoria_icone_row">
-										<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+										<img src="content/images/Food And Wine Filled-20.png" alt="Icone_supermercado">
 									</div>
 							        {{categorias[$index].Nome}}
 							  </div>
 							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_categoria(categorias[$index+1])">
 							 	<span ng-show="categorias[$index+1]">
 									<div class="categoria_icone_row">
-										<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+										<img src="content/images/Food And Wine Filled-20.png" alt="Icone_supermercado">
 									</div>
 							        {{categorias[$index+1].Nome}}
 							    </span>
@@ -147,7 +153,7 @@
 							 <div class="col-tag efeito_hover" ng-switch-when="0" ng-click="show_edit_categoria(categorias[$index+2])">
 							 	<span ng-show="categorias[$index+2]">
 									<div class="categoria_icone_row">
-										<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+										<img src="content/images/Food And Wine Filled-20.png" alt="Icone_supermercado">
 									</div>
 							        {{categorias[$index+2].Nome}}
 							    </span>
@@ -162,7 +168,7 @@
 					<div class="">
 						<span class="bold roxo" >Editando categoria: </span> <span class="red">{{ erro_edit_categoria_nome }} </span>
 						<div class="float_right">
-							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categoria_editar()">
+							<img src="content/images/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categoria_editar()">
 						</div>
 					</div>
 					<input class="input_compra input_valor" placeholder="Nome da categoria"  type="text"/ ng-model="categoria_ativo.Nome">
@@ -180,7 +186,7 @@
 					<div class="">
 						<span class="verde bold" >Adicionar categoria: </span> <span class="red">{{ erro_add_categoria_nome }} </span>
 						<div class="float_right">
-							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categoria_adicionar()">
+							<img src="content/images/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_categoria_adicionar()">
 						</div>
 					</div>
 					<input class="input_compra input_valor" ng-model="categoria_add" placeholder="Nome da categoria"  type="text"/>
@@ -197,7 +203,7 @@
 					<div class="titulo_categoria">
 						<span class="x-large azul"> Estabelecimentos </span>
 						<div class="float_right"">
-							<img class="minimizewindow" src="img/Minimize Window-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimentos()">
+							<img class="minimizewindow" src="content/images/Minimize Window-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimentos()">
 						</div>
 					</div>
 
@@ -231,7 +237,7 @@
 					<div class="">
 						<span class="bold azul" >Editando estabelecimento: </span> <span class="red"> {{ erro_edit_estabelecimento_nome }} </span>
 						<div class="float_right">
-							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimento_editar()">
+							<img src="content/images/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimento_editar()">
 						</div>
 					</div>
 					<input class="input_compra input_valor" placeholder="Nome da categoria"  type="text"/ ng-model="estabelecimento_ativo.Nome">
@@ -249,7 +255,7 @@
 					<div class="">
 						<span class="verde bold" >Adicionar estabelecimento: </span> <span class="red">{{ erro_add_estabelecimento_nome }} </span>
 						<div class="float_right">
-							<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimento_adicionar()">
+							<img src="content/images/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_estabelecimento_adicionar()">
 						</div>
 					</div>
 					<input class="input_compra input_valor" ng-model="estabelecimento_add" placeholder="Nome da categoria"  type="text"/ ng-model="estabelecimento_add.Nome">
@@ -292,7 +298,7 @@
 
 			<div class="cartao_compra cartao_compra_item fundo_branco efeito_hover" ng-repeat="compra in comprasFiltradas= (compras | filter:criteria)" ng-click="show_edit_compra($event, compra)">
 					<div class="compra_icone_row cartao_element">
-						<img src="img/Food And Wine Filled-20.png" alt="Icone_supermercado">
+						<img src="content/images/Food And Wine Filled-20.png" alt="Icone_supermercado">
 					</div>
 
 					<div class="compra_categoria_estabelecimento_row cartao_element">
@@ -325,7 +331,7 @@
 					</div>
 
 					<div class="exit"">
-						<img src="img/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_compra()">
+						<img src="content/images/Multiply-20.png" alt="Fechar Janela de Edição de Compra" ng-click="hide_compra()">
 					</div>
 				</div>
 
